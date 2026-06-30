@@ -1,1060 +1,1220 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CotizaciÃ³n Max & Yeilin</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cotización Max & Yeilin — 3 opciones</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #f3eee4;
-  --bg-deep: #e8e1d2;
-  --cement: #c5bfb5;
-  --cement-dark: #8a847a;
-  --ink: #1a1715;
-  --ink-soft: #4d4439;
-  --ink-muted: #7e756a;
-  --gold: #b08d4f;
-  --gold-bright: #c9a05c;
-  --gold-deep: #8b6a32;
-  --bronze: #a87344;
-  --line: rgba(26, 23, 21, 0.1);
-  --line-strong: rgba(26, 23, 21, 0.2);
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: 'Inter', -apple-system, sans-serif;
-  background:
-    radial-gradient(ellipse 1200px 800px at 50% 0%, rgba(255,255,255,0.4), transparent 50%),
-    linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
-  color: var(--ink);
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-  font-weight: 300;
-  min-height: 100vh;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  background-image:
-    radial-gradient(circle at 25% 30%, rgba(138, 132, 122, 0.03) 0%, transparent 25%),
-    radial-gradient(circle at 75% 70%, rgba(138, 132, 122, 0.04) 0%, transparent 25%);
-}
-
-main, section, footer { position: relative; z-index: 2; }
-
-.section {
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 120px 48px;
-}
-
-@media (max-width: 720px) {
-  .section { padding: 80px 24px; }
-}
-
-.hero {
-  min-height: 100vh;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 80px 24px 120px;
-  overflow: hidden;
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background:
-    radial-gradient(ellipse 800px 600px at 50% 30%, rgba(176, 141, 79, 0.12), transparent 70%),
-    linear-gradient(180deg, rgba(243, 238, 228, 0.6), rgba(232, 225, 210, 0.6));
-  z-index: -1;
-}
-
-.hero-ring {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 75vh; height: 75vh;
-  max-width: 700px; max-height: 700px;
-  border: 1px solid var(--gold);
-  border-radius: 50%;
-  opacity: 0.2;
-}
-
-.hero-ring-2 {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 65vh; height: 65vh;
-  max-width: 600px; max-height: 600px;
-  border: 1px solid var(--gold);
-  border-radius: 50%;
-  opacity: 0.12;
-}
-
-.hero-frame { position: relative; z-index: 2; max-width: 760px; }
-
-.hero-eyebrow {
-  font-size: 10px;
-  letter-spacing: 6px;
-  text-transform: uppercase;
-  color: var(--gold-deep);
-  margin-bottom: 40px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-}
-
-.hero-eyebrow::before, .hero-eyebrow::after {
-  content: '';
-  width: 32px;
-  height: 1px;
-  background: var(--gold);
-}
-
-.hero-eyebrow em {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 13px;
-  letter-spacing: 1px;
-  font-style: italic;
-  color: var(--ink-soft);
-  text-transform: none;
-  font-weight: 400;
-}
-
-.hero-names {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(64px, 16vw, 140px);
-  font-weight: 300;
-  line-height: 0.95;
-  letter-spacing: -3px;
-  margin-bottom: 48px;
-  color: var(--ink);
-}
-
-.hero-names .amp {
-  display: inline-block;
-  margin: 0 24px;
-  font-style: italic;
-  color: var(--bronze);
-  font-weight: 400;
-  font-size: 0.7em;
-  vertical-align: middle;
-}
-
-.hero-date {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(22px, 4vw, 28px);
-  font-weight: 400;
-  color: var(--ink-soft);
-  margin-bottom: 16px;
-  letter-spacing: 2px;
-}
-
-.hero-place {
-  font-size: 10px;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  margin-bottom: 56px;
-  font-weight: 400;
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 28px;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid var(--gold);
-  border-radius: 100px;
-  font-size: 10px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--ink);
-  font-weight: 400;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 4px 16px rgba(176, 141, 79, 0.08);
-}
-
-.hero-badge::before {
-  content: '';
-  width: 6px; height: 6px;
-  background: var(--bronze);
-  border-radius: 50%;
-  animation: pulse 2.4s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.4); opacity: 0.5; }
-}
-
-.hero-scroll {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 9px;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  font-weight: 500;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  animation: drift 2.4s ease-in-out infinite;
-}
-
-.hero-scroll::after {
-  content: '';
-  width: 1px;
-  height: 36px;
-  background: linear-gradient(to bottom, var(--gold), transparent);
-}
-
-@keyframes drift {
-  0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.5; }
-  50% { transform: translateX(-50%) translateY(8px); opacity: 1; }
-}
-
-.quote-meta {
-  max-width: 880px;
-  margin: 0 auto;
-  padding: 28px 48px 32px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 16px;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-
-@media (max-width: 720px) {
-  .quote-meta { padding: 24px 24px 28px; }
-}
-
-.meta-cell { flex: 1 1 auto; min-width: 140px; }
-
-.meta-label {
-  font-size: 9px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  margin-bottom: 6px;
-  font-weight: 500;
-}
-
-.meta-value {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 20px;
-  font-weight: 500;
-  color: var(--ink);
-  letter-spacing: 0.5px;
-}
-
-.sec-label {
-  font-size: 10px;
-  letter-spacing: 6px;
-  text-transform: uppercase;
-  color: var(--gold-deep);
-  margin-bottom: 24px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.sec-label::before {
-  content: '';
-  width: 28px;
-  height: 1px;
-  background: var(--bronze);
-}
-
-.sec-label em {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 14px;
-  font-style: italic;
-  letter-spacing: 1px;
-  text-transform: none;
-  color: var(--ink-muted);
-  font-weight: 400;
-}
-
-.sec-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(40px, 7vw, 64px);
-  font-weight: 300;
-  margin-bottom: 24px;
-  line-height: 1.1;
-  color: var(--ink);
-  letter-spacing: -1.5px;
-}
-
-.sec-lede {
-  font-size: 16px;
-  font-weight: 300;
-  color: var(--ink-soft);
-  max-width: 600px;
-  line-height: 1.7;
-  margin-bottom: 80px;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  border: 1px solid var(--line);
-  border-radius: 2px;
-  background: rgba(255,255,255,0.4);
-  backdrop-filter: blur(8px);
-  margin-bottom: 96px;
-}
-
-@media (min-width: 768px) {
-  .stats { grid-template-columns: repeat(4, 1fr); }
-}
-
-.stat {
-  padding: 40px 28px;
-  border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  text-align: center;
-}
-
-.stat:nth-child(2n) { border-right: none; }
-.stat:nth-last-child(-n+2) { border-bottom: none; }
-
-@media (min-width: 768px) {
-  .stat { border-bottom: none; }
-  .stat:last-child { border-right: none; }
-}
-
-.stat-n {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 56px;
-  font-weight: 400;
-  color: var(--ink);
-  line-height: 1;
-  letter-spacing: -1.5px;
-  display: block;
-  margin-bottom: 12px;
-}
-
-.stat-n small {
-  font-size: 22px;
-  font-weight: 300;
-  vertical-align: super;
-  margin-left: 2px;
-  color: var(--bronze);
-}
-
-.stat-l {
-  font-size: 10px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  font-weight: 500;
-}
-
-@media (max-width: 540px) {
-  .stat { padding: 32px 16px; }
-  .stat-n { font-size: 44px; }
-}
-
-.pkg-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 32px;
-  margin-top: 32px;
-}
-
-@media (min-width: 900px) {
-  .pkg-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
+  :root {
+    --ink: #1a1715;
+    --paper: #faf7f0;
+    --cream: #f3eee4;
+    --sand: #e8e1d2;
+    --bronze: #a87344;
+    --gold: #d4b577;
+    --gold-bright: #e8c878;
+    --text: #2c2825;
+    --muted: #6b6157;
   }
-}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--paper);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.6 0 0 0 0 0.5 0 0 0 0 0.35 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.4;
+    z-index: 1;
+  }
 
-.pkg-card {
-  background: white;
-  border: 1px solid var(--line);
-  border-radius: 2px;
-  overflow: hidden;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
-  box-shadow: 0 2px 12px rgba(26, 23, 21, 0.03);
-}
-
-.pkg-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 24px 64px rgba(26, 23, 21, 0.08), 0 4px 12px rgba(26, 23, 21, 0.04);
-}
-
-.pkg-top {
-  height: 4px;
-  background: linear-gradient(90deg, var(--gold-deep), var(--gold-bright), var(--bronze));
-}
-
-.pkg-body { padding: 48px 40px 40px; }
-
-.pkg-icon {
-  width: 44px;
-  height: 44px;
-  border: 1px solid var(--line-strong);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 32px;
-  color: var(--bronze);
-}
-
-.pkg-icon svg { fill: none; stroke: currentColor; stroke-width: 1.5; }
-
-.pkg-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 32px;
-  font-weight: 400;
-  color: var(--ink);
-  letter-spacing: -0.5px;
-  margin-bottom: 12px;
-  line-height: 1;
-}
-
-.pkg-sub {
-  font-size: 10px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  font-weight: 500;
-  margin-bottom: 32px;
-}
-
-.feat-list { list-style: none; }
-
-.feat-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  padding: 16px 0;
-  border-top: 1px solid var(--line);
-  font-size: 14px;
-  color: var(--ink-soft);
-  font-weight: 300;
-  line-height: 1.6;
-}
-
-.feat-list li:last-child { border-bottom: 1px solid var(--line); }
-
-.feat-bullet {
-  flex-shrink: 0;
-  margin-top: 8px;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--bronze);
-}
-
-.feat-list b { color: var(--ink); font-weight: 500; }
-.feat-list em { color: var(--gold-deep); font-style: normal; font-weight: 500; }
-
-.timeline-wrap {
-  background: white;
-  border: 1px solid var(--line);
-  border-radius: 2px;
-  overflow: hidden;
-  box-shadow: 0 2px 12px rgba(26, 23, 21, 0.03);
-}
-
-.timeline {
-  position: relative;
-  padding: 56px 48px 48px;
-}
-
-.t-events {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
-}
-
-@media (min-width: 768px) {
-  .t-events { grid-template-columns: repeat(4, 1fr); }
-}
-
-.t-event {
-  padding: 28px 0;
-  position: relative;
-}
-
-@media (min-width: 768px) {
-  .t-event {
+  /* ===== HERO COMPARTIDO ===== */
+  .hero {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 32px 60px;
     text-align: center;
-    padding: 0 16px;
-    border-right: 1px solid var(--line);
+    overflow: hidden;
   }
-  .t-event:last-child { border-right: none; }
-}
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center top, #faf7f0 0%, #e8e1d2 60%, #d4b577 100%);
+    z-index: -1;
+  }
+  .hero-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(168, 115, 68, 0.2);
+    z-index: 0;
+  }
+  .hero-ring-1 { width: 600px; height: 600px; top: -200px; left: 50%; transform: translateX(-50%); }
+  .hero-ring-2 { width: 900px; height: 900px; top: -350px; left: 50%; transform: translateX(-50%); border-color: rgba(168, 115, 68, 0.1); }
+  .hero-content { position: relative; z-index: 2; max-width: 900px; }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--bronze);
+    font-weight: 500;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--bronze);
+  }
+  .hero-names {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 9vw, 96px);
+    font-weight: 400;
+    line-height: 1.05;
+    color: var(--ink);
+    margin-bottom: 32px;
+    letter-spacing: -0.02em;
+  }
+  .hero-names .amp {
+    font-style: italic;
+    color: var(--bronze);
+    font-weight: 300;
+    margin: 0 0.15em;
+    font-size: 0.85em;
+  }
+  .hero-place {
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 40px;
+    font-weight: 400;
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--bronze);
+    text-transform: uppercase;
+    opacity: 0.6;
+    animation: bounce 2.5s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-8px); }
+  }
 
-.t-num {
-  width: 40px;
-  height: 40px;
-  border: 1.5px solid var(--bronze);
-  border-radius: 50%;
-  background: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 500;
-  font-size: 18px;
-  color: var(--bronze);
-  margin-bottom: 24px;
-  position: relative;
-  z-index: 2;
-}
+  /* ===== META BAR ===== */
+  .quote-meta {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 24px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+  .quote-meta-item .label {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .quote-meta-item .value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .quote-meta-item .value small {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-left: 4px;
+  }
 
-@media (min-width: 768px) {
-  .t-num { margin: 0 auto 24px; }
-}
+  /* ===== TABS ===== */
+  .tabs-bar {
+    background: var(--cream);
+    padding: 0;
+    border-bottom: 1px solid rgba(168, 115, 68, 0.2);
+    position: relative;
+    z-index: 50;
+    box-shadow: 0 4px 16px rgba(26, 23, 21, 0.06);
+  }
+  .tabs-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .tab-btn {
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 32px 16px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    color: var(--muted);
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    overflow: hidden;
+  }
+  .tab-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(212, 181, 119, 0) 0%, rgba(212, 181, 119, 0.15) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn:hover::before { opacity: 1; }
+  .tab-btn.active {
+    color: var(--ink);
+    background: var(--paper);
+    border-bottom-color: var(--bronze);
+  }
+  .tab-btn.active::before { opacity: 0; }
+  .tab-eyebrow {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--bronze);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .tab-name {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .tab-price {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--bronze);
+    letter-spacing: 1px;
+  }
 
-.t-event.paid .t-num {
-  background: var(--bronze);
-  color: white;
-  border-color: var(--bronze);
-  box-shadow: 0 4px 12px rgba(168, 115, 68, 0.25);
-}
+  /* ===== COTIZACIONES ===== */
+  .quote-section {
+    display: none;
+    animation: fadeIn 0.6s ease;
+  }
+  .quote-section.active {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-.t-date {
-  font-size: 10px;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  margin-bottom: 8px;
-  font-weight: 500;
-}
+  /* ===== SECTION HEADER ===== */
+  .section {
+    padding: 80px 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  .sec-eyebrow {
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--bronze);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+  .sec-title {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 24px;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .sec-lede {
+    text-align: center;
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 600px;
+    margin: 0 auto 64px;
+    line-height: 1.7;
+  }
 
-.t-amount {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 36px;
-  font-weight: 400;
-  color: var(--ink);
-  line-height: 1;
-  margin-bottom: 8px;
-  letter-spacing: -1px;
-}
+  /* ===== STATS ===== */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-bottom: 80px;
+    border-top: 1px solid rgba(168, 115, 68, 0.2);
+    border-bottom: 1px solid rgba(168, 115, 68, 0.2);
+  }
+  .stat {
+    padding: 40px 24px;
+    text-align: center;
+    border-right: 1px solid rgba(168, 115, 68, 0.15);
+    position: relative;
+    transition: background 0.4s ease;
+  }
+  .stat:last-child { border-right: none; }
+  .stat:hover { background: rgba(212, 181, 119, 0.06); }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 4px;
+  }
+  .stat-num .small {
+    font-size: 20px;
+    color: var(--bronze);
+    font-style: italic;
+  }
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
 
-.t-status {
-  font-size: 9px;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--bronze);
-  font-weight: 500;
-}
+  /* ===== PACKAGE CARDS ===== */
+  .pkg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+    margin-bottom: 80px;
+  }
+  .pkg-card {
+    background: white;
+    border-radius: 0;
+    border: 1px solid rgba(168, 115, 68, 0.15);
+    overflow: hidden;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+  }
+  .pkg-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px rgba(26, 23, 21, 0.1);
+  }
+  .pkg-head {
+    background: linear-gradient(135deg, var(--ink) 0%, #2c2825 100%);
+    color: white;
+    padding: 40px 32px;
+    text-align: center;
+  }
+  .pkg-head .eyebrow {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .pkg-head h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .pkg-head .sub {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+  }
+  .pkg-body { padding: 40px 32px 36px; }
+  .pkg-body ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .pkg-body li {
+    display: flex;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(168, 115, 68, 0.1);
+    font-size: 14px;
+    color: var(--text);
+  }
+  .pkg-body li:last-child { border-bottom: none; }
+  .feat-bullet {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--bronze) 100%);
+    position: relative;
+    margin-top: 2px;
+  }
+  .feat-bullet::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 7px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
 
-.total-card {
-  background: var(--ink);
-  color: white;
-  padding: 56px 48px;
-  border-top: 1px solid var(--line-strong);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 32px;
-  flex-wrap: wrap;
-  position: relative;
-  overflow: hidden;
-}
+  /* ===== TIMELINE / PAGOS ===== */
+  .timeline-section {
+    background: linear-gradient(180deg, var(--cream) 0%, var(--paper) 100%);
+    padding: 100px 32px;
+    position: relative;
+    z-index: 2;
+  }
+  .timeline-wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .timeline-events {
+    display: grid;
+    grid-template-columns: repeat({total_cuotas}, 1fr);
+    gap: 16px;
+    margin-top: 48px;
+  }
+  .t-event {
+    background: white;
+    border: 1px solid rgba(168, 115, 68, 0.15);
+    padding: 28px 20px;
+    text-align: center;
+    border-radius: 0;
+    transition: transform 0.4s ease, border-color 0.4s ease;
+    position: relative;
+  }
+  .t-event.paid {
+    border-color: var(--bronze);
+    background: linear-gradient(180deg, #faf7f0 0%, white 100%);
+  }
+  .t-event.paid::before {
+    content: '✓';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 24px;
+    height: 24px;
+    background: var(--bronze);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .t-event:hover {
+    transform: translateY(-2px);
+    border-color: var(--bronze);
+  }
+  .t-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    color: var(--bronze);
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  .t-date {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .t-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .t-status {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--bronze);
+    font-weight: 500;
+  }
 
-.total-card::before {
-  content: '';
-  position: absolute;
-  top: -100%; right: -10%;
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(176, 141, 79, 0.25), transparent 60%);
-  pointer-events: none;
-}
+  /* ===== CALCULADORA DE PAGOS INTERACTIVA ===== */
+  .cuotas-control {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 32px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .cuotas-btn {
+    background: white;
+    border: 1px solid rgba(168, 115, 68, 0.3);
+    color: var(--text);
+    padding: 14px 24px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 100px;
+    min-width: 130px;
+  }
+  .cuotas-btn:hover {
+    border-color: var(--bronze);
+    transform: translateY(-2px);
+  }
+  .cuotas-btn.active {
+    background: var(--ink);
+    color: white;
+    border-color: var(--ink);
+  }
+  .cuotas-btn.active::after {
+    content: ' ✓';
+  }
+  .cuotas-summary {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 8px;
+    margin-bottom: 32px;
+  }
+  .cuotas-summary strong {
+    color: var(--bronze);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .timeline-events.calculator {
+    display: none;
+  }
+  .timeline-events.calculator.visible {
+    display: grid;
+  }
 
-.total-l {
-  font-size: 10px;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  font-weight: 500;
-  color: rgba(255,255,255,0.55);
-  margin-bottom: 12px;
-}
+  /* ===== TOTAL ===== */
+  .total-section {
+    padding: 100px 32px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+  .total-card {
+    background: var(--ink);
+    color: white;
+    padding: 56px 40px;
+    border-radius: 0;
+    border: 1px solid rgba(212, 181, 119, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .total-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(212, 181, 119, 0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .total-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    font-weight: 500;
+    position: relative;
+  }
+  .total-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 400;
+    line-height: 1;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .total-amount .currency {
+    font-size: 36px;
+    color: var(--gold);
+    vertical-align: top;
+    line-height: 1;
+  }
+  .total-foot {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    position: relative;
+  }
 
-.total-n {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(48px, 8vw, 72px);
-  font-weight: 300;
-  background: linear-gradient(135deg, var(--gold-bright), var(--bronze));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-  line-height: 1;
-  letter-spacing: -1px;
-}
+  /* ===== CTA ===== */
+  .cta-section {
+    padding: 100px 32px;
+    text-align: center;
+    background: linear-gradient(180deg, var(--paper) 0%, var(--cream) 100%);
+    position: relative;
+    z-index: 2;
+  }
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 6vw, 56px);
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 24px;
+    line-height: 1.1;
+  }
+  .cta-desc {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 540px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+  }
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bronze);
+    color: white;
+    padding: 18px 40px;
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-radius: 100px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 8px 24px rgba(168, 115, 68, 0.3);
+    border: none;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+  }
+  .cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(168, 115, 68, 0.5);
+    background: var(--gold);
+    color: var(--ink);
+  }
+  .cta-meta {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 16px;
+    letter-spacing: 1px;
+  }
 
-.total-meta {
-  font-size: 10px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.4);
-  margin-top: 16px;
-}
+  /* ===== FOOTER ===== */
+  .footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 60px 32px 32px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+  }
+  .footer-brand span { color: var(--gold); font-style: italic; }
+  .footer-tag {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+  }
+  .footer-contact {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 32px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .footer-contact a {
+    color: var(--paper);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .footer-contact a:hover { color: var(--gold); }
+  .footer-bottom {
+    border-top: 1px solid rgba(212, 181, 119, 0.15);
+    padding-top: 24px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
 
-@media (max-width: 540px) {
-  .total-card { padding: 40px 32px; flex-direction: column; align-items: flex-start; }
-}
+  /* ===== DL BUTTON ===== */
+  .dl-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    margin: 24px auto 40px;
+    background: var(--ink);
+    color: white;
+    border: 1px solid rgba(212, 181, 119, 0.4);
+    border-radius: 100px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 12px 32px rgba(26, 23, 21, 0.25);
+    transition: all 0.4s ease;
+    display: flex;
+    width: fit-content;
+  }
+  .dl-btn:hover {
+    transform: translateY(-3px);
+    background: var(--bronze);
+    border-color: var(--gold-bright);
+  }
 
-.cta-section {
-  background:
-    radial-gradient(ellipse 800px 400px at 50% 50%, rgba(176, 141, 79, 0.1), transparent 70%),
-    var(--bg);
-  padding: 120px 32px;
-  text-align: center;
-  border-top: 1px solid var(--line);
-}
+  /* ===== FADE ===== */
+  .fade { opacity: 0; transform: translateY(24px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .fade.in { opacity: 1; transform: translateY(0); }
 
-.cta-eyebrow {
-  font-size: 10px;
-  letter-spacing: 6px;
-  text-transform: uppercase;
-  color: var(--gold-deep);
-  margin-bottom: 24px;
-  font-weight: 500;
-}
+  /* ===== MOBILE ===== */
+  @media (max-width: 768px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(2) { border-right: none; }
+    .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid rgba(168, 115, 68, 0.15); }
+    .tabs-container {
+      grid-template-columns: repeat(3, 1fr);
+      overflow-x: auto;
+    }
+    .tab-btn {
+      border-bottom: 3px solid transparent;
+      border-right: 1px solid rgba(168, 115, 68, 0.1);
+      padding: 18px 12px;
+      min-width: 0;
+    }
+    .tab-btn:last-child { border-right: none; }
+    .tab-btn.active { border-bottom-color: var(--bronze); }
+    .tab-name { font-size: 16px; }
+    .tab-eyebrow { font-size: 8px; }
+    .tab-price { font-size: 11px; }
+    .timeline-events { grid-template-columns: 1fr; }
+    .pkg-grid { grid-template-columns: 1fr; }
+    .hero { min-height: 60vh; padding: 60px 24px 40px; }
+    .section, .total-section, .cta-section, .timeline-section { padding-left: 20px; padding-right: 20px; }
+  }
 
-.cta-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(36px, 6vw, 56px);
-  font-weight: 300;
-  margin-bottom: 32px;
-  line-height: 1.15;
-  letter-spacing: -1px;
-  color: var(--ink);
-}
+  /* ===== PRINT ===== */
+  @media (max-width: 540px) {
+    .dl-btn { display: none !important; }
+    .tabs-container { gap: 0; }
+    .tab-btn { padding: 12px 8px; }
+    .tab-name { font-size: 14px; }
+    .tab-eyebrow { font-size: 7px; letter-spacing: 1px; }
+    .tab-price { font-size: 10px; }
+  }
 
-.cta-lede {
-  font-size: 16px;
-  color: var(--ink-soft);
-  max-width: 480px;
-  margin: 0 auto 56px;
-  line-height: 1.7;
-}
+  @media print {
+    body::before { display: none; }
+    html, body { background: white !important; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 
-.cta-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  background: linear-gradient(135deg, var(--bronze), var(--gold-deep));
-  color: white;
-  padding: 20px 48px;
-  border-radius: 100px;
-  font-size: 11px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  font-weight: 500;
-  text-decoration: none;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 12px 32px rgba(168, 115, 68, 0.3), 0 2px 6px rgba(168, 115, 68, 0.2);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-}
+    .dl-btn, .hero-scroll, .tabs-bar { display: none !important; }
 
-.cta-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 40px rgba(168, 115, 68, 0.4), 0 2px 8px rgba(168, 115, 68, 0.3);
-}
+    .hero { min-height: auto !important; padding: 50px 24px 60px !important; page-break-after: avoid; }
+    .hero::before { background: linear-gradient(180deg, #f3eee4 0%, #e8e1d2 100%) !important; opacity: 1 !important; }
+    .hero-ring, .hero-ring-2 { display: none !important; }
 
-.cta-btn svg { stroke: currentColor; fill: none; stroke-width: 1.5; }
+    .quote-meta { padding: 18px 32px !important; }
 
-/* ===== BOTÃ“N DESCARGAR PDF ===== */
-.dl-btn {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  z-index: 100;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 22px;
-  background: var(--ink);
-  color: white;
-  border: 1px solid rgba(212, 181, 119, 0.4);
-  border-radius: 100px;
-  font-family: 'Inter', -apple-system, sans-serif;
-  font-size: 10px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  font-weight: 500;
-  cursor: pointer;
-  box-shadow: 0 12px 32px rgba(26, 23, 21, 0.25), 0 2px 6px rgba(26, 23, 21, 0.15);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, background 0.3s ease;
-  backdrop-filter: blur(8px);
-}
+    /* Forzar visibilidad SOLO de la cotización activa al imprimir */
+    .quote-section { display: block !important; animation: none !important; page-break-before: always; }
+    .quote-section:first-of-type { page-break-before: avoid; }
+    .quote-section:not(.active) {
+      /* No ocultar en print para que aparezcan todas como secciones distintas */
+    }
 
-.dl-btn:hover {
-  transform: translateY(-3px);
-  background: var(--bronze);
-  border-color: var(--gold-bright);
-  box-shadow: 0 16px 40px rgba(168, 115, 68, 0.4), 0 2px 8px rgba(168, 115, 68, 0.3);
-}
+    .section { padding: 40px 32px !important; max-width: 100% !important; }
+    .stats { margin-bottom: 40px !important; page-break-inside: avoid !important; }
+    .stat { padding: 24px 16px !important; }
 
-.dl-btn svg { stroke: currentColor; fill: none; stroke-width: 1.5; flex-shrink: 0; }
+    .pkg-card { box-shadow: none !important; page-break-inside: avoid !important; }
+    .pkg-grid { gap: 20px !important; }
 
-@media (max-width: 540px) {
-  .dl-btn { bottom: 16px; right: 16px; padding: 12px 18px; font-size: 9px; }
-}
+    .timeline-section { padding: 40px 32px !important; page-break-inside: avoid !important; }
+    .timeline-wrap { page-break-inside: avoid !important; }
 
-/* ===== PRINT: PDF limpio ===== */
-@media print {
-  body::before { display: none; }
-  html, body { background: white !important; }
-  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .total-section { padding: 40px 32px !important; page-break-inside: avoid !important; }
+    .total-card { padding: 32px 24px !important; page-break-inside: avoid !important; }
 
-  .dl-btn, .hero-scroll { display: none !important; }
+    .cta-section { padding: 40px 32px !important; page-break-inside: avoid !important; }
+    .footer { padding: 32px 24px 20px !important; page-break-inside: avoid !important; }
 
-  /* Mantener CTA y footer */
-  .cta-section { display: block !important; padding: 60px 32px !important; page-break-inside: avoid; }
-  .footer { padding: 40px 32px 28px !important; page-break-inside: avoid; }
+    .fade { opacity: 1 !important; transform: none !important; transition: none !important; }
 
-  /* Hero mÃ¡s compacto */
-  .hero { min-height: auto !important; padding: 50px 24px 60px !important; page-break-after: avoid; }
-  .hero::before { background: linear-gradient(180deg, #f3eee4 0%, #e8e1d2 100%) !important; opacity: 1 !important; }
-  .hero-ring, .hero-ring-2 { display: none !important; }
-  .hero-eyebrow { margin-bottom: 24px !important; }
-  .hero-names { margin-bottom: 28px !important; }
-  .hero-place { margin-bottom: 32px !important; }
-
-  .section { padding: 40px 32px !important; max-width: 100% !important; }
-  .quote-meta { padding: 18px 32px !important; }
-  .sec-lede { margin-bottom: 40px !important; }
-  .stats { padding: 0 !important; margin-bottom: 48px !important; page-break-inside: avoid !important; }
-  .stat { padding: 28px 20px !important; }
-
-  /* Evitar cortes dentro de tarjetas y timeline */
-  .pkg-card { box-shadow: none !important; page-break-inside: avoid !important; }
-  .pkg-body { padding: 32px 28px 28px !important; }
-  .pkg-grid { gap: 24px !important; }
-  .timeline-wrap { page-break-inside: avoid !important; }
-  .total-card { page-break-inside: avoid !important; padding: 36px 32px !important; }
-
-  /* Forzar visibilidad */
-  .fade { opacity: 1 !important; transform: none !important; transition: none !important; }
-
-  @page { margin: 0; size: A4; }
-}
-
-.cta-meta {
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  margin-top: 32px;
-  font-weight: 500;
-}
-
-.footer {
-  background: var(--ink);
-  color: rgba(255,255,255,0.7);
-  padding: 80px 32px 48px;
-  text-align: center;
-}
-
-.footer-brand {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 28px;
-  font-weight: 400;
-  font-style: italic;
-  color: rgba(212, 181, 119, 0.9);
-  margin-bottom: 8px;
-  letter-spacing: 1px;
-}
-
-.footer-tag {
-  font-size: 9px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.4);
-  margin-bottom: 56px;
-  font-weight: 500;
-}
-
-.footer-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 32px;
-  max-width: 600px;
-  margin: 0 auto 48px;
-}
-
-@media (min-width: 600px) {
-  .footer-grid { grid-template-columns: repeat(3, 1fr); }
-}
-
-.footer-cell-label {
-  font-size: 9px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.4);
-  margin-bottom: 10px;
-  font-weight: 500;
-}
-
-.footer-cell-value {
-  font-size: 14px;
-  color: rgba(255,255,255,0.85);
-  font-weight: 400;
-}
-
-.footer-cell-value a {
-  color: rgba(212, 181, 119, 0.95);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(212, 181, 119, 0.5);
-  padding-bottom: 1px;
-}
-
-.footer-meta {
-  font-size: 9px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: rgba(212, 181, 119, 0.7);
-  padding-top: 32px;
-  border-top: 1px solid rgba(255,255,255,0.1);
-  font-weight: 500;
-}
-
-.fade {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.fade.in { opacity: 1; transform: translateY(0); }
+    @page { margin: 0; size: A4; }
+  }
 </style>
 </head>
 <body>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-ring"></div>
-  <div class="hero-ring-2"></div>
-  <div class="hero-frame">
+<!-- HERO COMPARTIDO -->
+<section class="hero fade in">
+  <div class="hero-ring hero-ring-1"></div>
+  <div class="hero-ring hero-ring-2"></div>
+  <div class="hero-content">
     <div class="hero-eyebrow">
-      <em>Norkevin Photography</em>
-      <span>Mix Gold</span>
+      <span>by Experience · Cotización Múltiple</span>
     </div>
-    <h1 class="hero-names">Max<span class="amp">&</span>Yeilin</h1>
-    <div class="hero-date">viernes Â· 11 Â· diciembre Â· 2026</div>
-    <div class="hero-place">Finca San Cayetano Â· Antigua Guatemala</div>
-    <div class="hero-badge">Mix Gold Â· CotizaciÃ³n Inicial</div>
+    <h1 class="hero-names">
+      Max <span class="amp">&</span> Yeilin
+    </h1>
+    <div class="hero-place">
+      viernes · 11 · diciembre · 2026 &nbsp;·&nbsp; Finca San Cayetano &nbsp;·&nbsp; Antigua Guatemala
+    </div>
+    <div style="font-size: 13px; color: var(--bronze); letter-spacing: 1px;">
+      Cotización N° 20260629 · 3 opciones para ustedes
+    </div>
   </div>
-  <div class="hero-scroll">Desliza</div>
+  <div class="hero-scroll">↓ Ver opciones</div>
 </section>
 
-<!-- QUOTE META BAR -->
-<div class="quote-meta">
-  <div class="meta-cell">
-    <div class="meta-label">CotizaciÃ³n</div>
-    <div class="meta-value">NÂ° 20260629-portfolio</div>
+<!-- META BAR -->
+<div class="quote-meta fade">
+  <div class="quote-meta-item">
+    <span class="label">Cotización</span>
+    <span class="value">N° 20260629</span>
   </div>
-  <div class="meta-cell">
-    <div class="meta-label">Emitida</div>
-    <div class="meta-value">29 Â· 06 Â· 2026</div>
+  <div class="quote-meta-item">
+    <span class="label">Emitida</span>
+    <span class="value">29 · 06 · 2026</span>
   </div>
-  <div class="meta-cell">
-    <div class="meta-label">Cliente</div>
-    <div class="meta-value" style="font-size: 17px;">by Experience</div>
+  <div class="quote-meta-item">
+    <span class="label">Cliente</span>
+    <span class="value">by Experience</span>
   </div>
-  <div class="meta-cell">
-    <div class="meta-label">Estado</div>
-    <div class="meta-value">Pendiente ðŸŸ¡</div>
+  <div class="quote-meta-item">
+    <span class="label">Estado</span>
+    <span class="value">Pendiente 🟡</span>
   </div>
 </div>
 
-<!-- PAQUETE -->
-<section class="section">
-  <div class="sec-label fade">El paquete <em>â€” Mix Gold</em></div>
-  <h2 class="sec-title fade">FotografÃ­a y video,<br>a la medida de tu boda.</h2>
-  <p class="sec-lede fade">Paquete estÃ¡ndar con cobertura extensa del evento. Incluye equipo profesional, save the date, video cinematogrÃ¡fico y entrega final en galerÃ­a privada.</p>
+<!-- TABS -->
+<div class="tabs-bar">
+  <div class="tabs-container">
+        <button class="tab-btn active" data-tab="1" aria-label="Ver Mix Platinum">
+      <span class="tab-eyebrow">Cotización 1</span>
+      <span class="tab-name">Mix Platinum</span>
+      <span class="tab-price">Q29,500</span>
+    </button>
+    <button class="tab-btn" data-tab="2" aria-label="Ver Mix Gold">
+      <span class="tab-eyebrow">Cotización 2</span>
+      <span class="tab-name">Mix Gold</span>
+      <span class="tab-price">Q20,500</span>
+    </button>
+    <button class="tab-btn" data-tab="3" aria-label="Ver Gold">
+      <span class="tab-eyebrow">Cotización 3</span>
+      <span class="tab-name">Gold</span>
+      <span class="tab-price">Q13,500</span>
+    </button>
+  </div>
+</div>
 
-  <div class="stats fade">
-    <div class="stat">
-      <span class="stat-n">2<small>+</small></span>
-      <span class="stat-l">FotÃ³grafos</span>
+<!-- ===== COTIZACIÓN 1 ===== -->
+<section class="quote-section active" data-quote="1">
+  <div class="section fade">
+    <div class="sec-eyebrow">Cotización 1 · Mix Platinum</div>
+    <h2 class="sec-title">Cobertura total,<br>foto + video + extras.</h2>
+    <p class="sec-lede">Paquete premium con cobertura completa del evento, incluyendo save the date y boda civil. La experiencia más completa para tu boda.</p>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">2<span class="small">+</span></div>
+        <div class="stat-label">Fotógrafos</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">12<span class="small">h</span></div>
+        <div class="stat-label">Cobertura</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">800<span class="small"></span></div>
+        <div class="stat-label">Fotografías</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">10<span class="small">min</span></div>
+        <div class="stat-label">Video final</div>
+      </div>
     </div>
-    <div class="stat">
-      <span class="stat-n">8<small>h</small></span>
-      <span class="stat-l">Cobertura</span>
-    </div>
-    <div class="stat">
-      <span class="stat-n">600</span>
-      <span class="stat-l">FotografÃ­as</span>
-    </div>
-    <div class="stat">
-      <span class="stat-n">7<small>min</small></span>
-      <span class="stat-l">Video final</span>
+
+    <div class="pkg-grid">
+      <div class="pkg-card">
+        <div class="pkg-head">
+          <div class="eyebrow">Cobertura Foto</div>
+          <h3>Fotografía</h3>
+          <div class="sub">Documental · Editorial</div>
+        </div>
+        <div class="pkg-body">
+          <ul>          <li><span class="feat-bullet"></span><span><b>2 Fotógrafos</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>12 horas de cobertura (Q1,000 hora extra)</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>800 fotografías finales</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>2 horas Save the date (diferente día)</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>4 horas de boda civil (diferente día)</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>Galería online con fotografías</b></span></li></ul>
+        </div>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-head">
+          <div class="eyebrow">Cobertura Video</div>
+          <h3>Video</h3>
+          <div class="sub">Cinematográfico</div>
+        </div>
+        <div class="pkg-body">
+          <ul>          <li><span class="feat-bullet"></span><span><b>2 Camarógrafos</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>12 horas de cobertura (Q1,000 hora extra)</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>10 min boda religiosa video final</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>1 min reel</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>(derecho a 4 correcciones)</b></span></li></ul>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="pkg-grid">
-    <div class="pkg-card fade">
-      <div class="pkg-top"></div>
-      <div class="pkg-body">
-        <div class="pkg-icon">
-          <svg viewBox="0 0 24 24" width="20" height="20">
-            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-            <circle cx="12" cy="13" r="4"/>
-          </svg>
+  <div class="timeline-section">
+    <div class="timeline-wrap">
+      <div style="text-align:center;">
+        <div class="sec-eyebrow">Calendario de pagos</div>
+        <h2 class="sec-title">Inversión planificada,<br>sin sorpresas.</h2>
+        <p class="sec-lede" data-lede>Pago fraccionado en 2 cuotas distribuidas entre la aceptación y los días previos al evento. La primera cuota se ejecuta al confirmar la cotización.</p>
+      </div>
+      <div class="cuotas-control" data-cuotas-control data-precio="29,500" data-evento="11 · 12 · 2026">
+        <button class="cuotas-btn active" data-cuotas="2">2 pagos</button>
+        <button class="cuotas-btn" data-cuotas="3">3 pagos</button>
+        <button class="cuotas-btn" data-cuotas="4">4 pagos</button>
+      </div>
+      <div class="cuotas-summary" data-cuotas-summary>
+        <strong data-cuota-monto>Q14,750</strong> por pago · Total <strong>Q29,500</strong>
+      </div>
+      <div class="timeline-events" data-timeline>
+                <div class="t-event paid">
+          <div class="t-num">1</div>
+          <div class="t-date">29 · jun · 2026</div>
+          <div class="t-amount">Q14,750</div>
+          <div class="t-status">Confirmado</div>
         </div>
-        <div class="pkg-name">FotografÃ­a</div>
-        <div class="pkg-sub">Documental Â· Editorial</div>
-        <ul class="feat-list">
-          <li><span class="feat-bullet"></span><span><b>2 FotÃ³grafos</b></span></li>
-          <li><span class="feat-bullet"></span><span><b>8 horas de cobertura (Q1,000 hora extra)</b></span></li>
-          <li><span class="feat-bullet"></span><span><b>600 fotografÃ­as finales</b></span></li>
-          <li><span class="feat-bullet"></span><span><b>2 horas Save the date (diferente dÃ­a)</b></span></li>
-          <li><span class="feat-bullet"></span><span><b>GalerÃ­a online con fotografÃ­as</b></span></li>
-        </ul>
+        <div class="t-event ">
+          <div class="t-num">2</div>
+          <div class="t-date">11 · dic · 2026</div>
+          <div class="t-amount">Q14,750</div>
+          <div class="t-status">Final</div>
+        </div>
       </div>
     </div>
+  </div>
 
-    <div class="pkg-card fade">
-      <div class="pkg-top"></div>
-      <div class="pkg-body">
-        <div class="pkg-icon">
-          <svg viewBox="0 0 24 24" width="20" height="20">
-            <polygon points="23 7 16 12 23 17 23 7"/>
-            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
-          </svg>
-        </div>
-        <div class="pkg-name">Video</div>
-        <div class="pkg-sub">CinematogrÃ¡fico</div>
-        <ul class="feat-list">
-          <li><span class="feat-bullet"></span><span><b>1 CamarÃ³grafo</b></span></li>
-          <li><span class="feat-bullet"></span><span><b>8 horas de cobertura (Q1,000 hora extra)</b></span></li>
-          <li><span class="feat-bullet"></span><span><b>7 min boda religiosa video final</b></span></li>
-          <li><span class="feat-bullet"></span><span><b>1 min reel</b></span></li>
-          <li><span class="feat-bullet"></span><span><b>(derecho a 3 correcciones)</b></span></li>
-        </ul>
-      </div>
+  <div class="total-section">
+    <div class="total-card">
+      <div class="total-label">Inversión total · Mix Platinum</div>
+      <div class="total-amount"><span class="currency">Q</span>29,500</div>
+      <div class="total-foot">Veintinueve Mil Quinientos Quetzales</div>
     </div>
+  </div>
+
+  <div class="cta-section">
+    <h2 class="cta-title">Confirmá y reservá<br>tu fecha</h2>
+    <p class="cta-desc">Tu fecha está disponible hasta que se ejecute la primera cuota. Si querés avanzar, agendamos una llamada para cuadrar los detalles finales.</p>
+    <a href="https://wa.me/50231648254?text=Hola%20Kevin%2C%20vengo%20de%20la%20cotizacion%20multiple%20de%20Max%20%26%20Yeilin%20%E2%80%94%20me%20interesa%20la%20Cotizacion%201%20(Mix Platinum)" class="cta-btn">
+      <svg viewBox="0 0 24 24" width="14" height="14"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" fill="currentColor"/></svg>
+      Hablar por WhatsApp — Cotización 1
+    </a>
+    <div class="cta-meta">Respuesta en menos de 24 h</div>
   </div>
 </section>
 
-<!-- TIMELINE PAGOS -->
-<section class="section">
-  <div class="sec-label fade">Calendario de pagos <em>â€” 2 cuotas</em></div>
-  <h2 class="sec-title fade">InversiÃ³n planificada,<br>sin sorpresas.</h2>
-  <p class="sec-lede fade">Pago fraccionado en 2 cuotas distribuidas entre la aceptaciÃ³n y los dÃ­as previos al evento. La primera cuota se ejecuta al confirmar la cotizaciÃ³n.</p>
+<!-- ===== COTIZACIÓN 2 ===== -->
+<section class="quote-section" data-quote="2">
+  <div class="section fade">
+    <div class="sec-eyebrow">Cotización 2 · Mix Gold</div>
+    <h2 class="sec-title">Fotografía y video,<br>a la medida de tu boda.</h2>
+    <p class="sec-lede">Paquete estándar con cobertura extensa del evento. Incluye equipo profesional, save the date, video cinematográfico y entrega final en galería privada.</p>
 
-  <div class="timeline-wrap fade">
-    <div class="timeline">
-      <div class="t-events">
-        <div class="t-event paid">
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">2<span class="small">+</span></div>
+        <div class="stat-label">Fotógrafos</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">8<span class="small">h</span></div>
+        <div class="stat-label">Cobertura</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">600<span class="small"></span></div>
+        <div class="stat-label">Fotografías</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">7<span class="small">min</span></div>
+        <div class="stat-label">Video final</div>
+      </div>
+    </div>
+
+    <div class="pkg-grid">
+      <div class="pkg-card">
+        <div class="pkg-head">
+          <div class="eyebrow">Cobertura Foto</div>
+          <h3>Fotografía</h3>
+          <div class="sub">Documental · Editorial</div>
+        </div>
+        <div class="pkg-body">
+          <ul>          <li><span class="feat-bullet"></span><span><b>2 Fotógrafos</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>8 horas de cobertura (Q1,000 hora extra)</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>600 fotografías finales</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>2 horas Save the date (diferente día)</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>Galería online con fotografías</b></span></li></ul>
+        </div>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-head">
+          <div class="eyebrow">Cobertura Video</div>
+          <h3>Video</h3>
+          <div class="sub">Cinematográfico</div>
+        </div>
+        <div class="pkg-body">
+          <ul>          <li><span class="feat-bullet"></span><span><b>1 Camarógrafo</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>8 horas de cobertura (Q1,000 hora extra)</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>7 min boda religiosa video final</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>1 min reel</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>(derecho a 3 correcciones)</b></span></li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="timeline-section">
+    <div class="timeline-wrap">
+      <div style="text-align:center;">
+        <div class="sec-eyebrow">Calendario de pagos</div>
+        <h2 class="sec-title">Inversión planificada,<br>sin sorpresas.</h2>
+        <p class="sec-lede">Pago fraccionado en 2 cuotas distribuidas entre la aceptación y los días previos al evento. La primera cuota se ejecuta al confirmar la cotización.</p>
+      </div>
+      <div class="cuotas-control" data-cuotas-control data-precio="20,500" data-evento="11 · 12 · 2026">
+        <button class="cuotas-btn active" data-cuotas="2">2 pagos</button>
+        <button class="cuotas-btn" data-cuotas="3">3 pagos</button>
+        <button class="cuotas-btn" data-cuotas="4">4 pagos</button>
+      </div>
+      <div class="cuotas-summary" data-cuotas-summary>
+        <strong data-cuota-monto>Q10,250</strong> por pago · Total <strong>Q20,500</strong>
+      </div>
+      <div class="timeline-events" data-timeline>
+                <div class="t-event paid">
           <div class="t-num">1</div>
-          <div class="t-date">29 Â· jun Â· 2026</div>
+          <div class="t-date">29 · jun · 2026</div>
           <div class="t-amount">Q10,250</div>
           <div class="t-status">Confirmado</div>
         </div>
         <div class="t-event ">
           <div class="t-num">2</div>
-          <div class="t-date">11 Â· dic Â· 2026</div>
+          <div class="t-date">11 · dic · 2026</div>
           <div class="t-amount">Q10,250</div>
           <div class="t-status">Final</div>
         </div>
       </div>
     </div>
+  </div>
 
+  <div class="total-section">
     <div class="total-card">
-      <div>
-        <div class="total-l">InversiÃ³n total</div>
-        <div class="total-meta">Mix Gold Â· 2 cuotas</div>
-      </div>
-      <div>
-        <div class="total-n">Q20,500</div>
-      </div>
+      <div class="total-label">Inversión total · Mix Gold</div>
+      <div class="total-amount"><span class="currency">Q</span>20,500</div>
+      <div class="total-foot">Veinte Mil Quinientos Quetzales</div>
     </div>
+  </div>
+
+  <div class="cta-section">
+    <h2 class="cta-title">Confirmá y reservá<br>tu fecha</h2>
+    <p class="cta-desc">Tu fecha está disponible hasta que se ejecute la primera cuota. Si querés avanzar, agendamos una llamada para cuadrar los detalles finales.</p>
+    <a href="https://wa.me/50231648254?text=Hola%20Kevin%2C%20vengo%20de%20la%20cotizacion%20multiple%20de%20Max%20%26%20Yeilin%20%E2%80%94%20me%20interesa%20la%20Cotizacion%202%20(Mix Gold)" class="cta-btn">
+      <svg viewBox="0 0 24 24" width="14" height="14"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" fill="currentColor"/></svg>
+      Hablar por WhatsApp — Cotización 2
+    </a>
+    <div class="cta-meta">Respuesta en menos de 24 h</div>
   </div>
 </section>
 
-<!-- CTA SECTION -->
-<section class="cta-section">
-  <div class="cta-eyebrow">PrÃ³ximo paso</div>
-  <h2 class="cta-title">ConfirmÃ¡ y reservÃ¡<br>tu fecha</h2>
-  <p class="cta-lede">Tu fecha estÃ¡ disponible hasta que se ejecute la primera cuota. Si querÃ©s avanzar, agendamos una llamada para cuadrar los detalles finales.</p>
-  <a href="https://wa.me/50231648254?text=Hola%20Kevin%2C%20vengo%20de%20la%20cotizaci%C3%B3n%20de%20Max%20%26%20Yeilin%20%E2%80%94%20quiero%20confirmar" class="cta-btn" target="_blank" rel="noopener">
-    <span>Hablar por WhatsApp</span>
-    <svg viewBox="0 0 24 24" width="14" height="14">
-      <line x1="5" y1="12" x2="19" y2="12"/>
-      <polyline points="12 5 19 12 12 19"/>
-    </svg>
-  </a>
-  <div class="cta-meta">Respuesta en menos de 24 h</div>
+<!-- ===== COTIZACIÓN 3 ===== -->
+<section class="quote-section" data-quote="3">
+  <div class="section fade">
+    <div class="sec-eyebrow">Cotización 3 · Gold</div>
+    <h2 class="sec-title">Solo fotografía,<br>cobertura premium de tu boda.</h2>
+    <p class="sec-lede">Paquete intermedio de fotografía con 2 profesionales, cobertura de 8 horas y sesión de save the date incluida. Ideal para bodas completas.</p>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">2<span class="small">+</span></div>
+        <div class="stat-label">Fotógrafos</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">8<span class="small">h</span></div>
+        <div class="stat-label">Cobertura</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">500<span class="small"></span></div>
+        <div class="stat-label">Fotografías</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">—<span class="small"></span></div>
+        <div class="stat-label">Sin video</div>
+      </div>
+    </div>
+
+    <div class="pkg-grid">
+      <div class="pkg-card">
+        <div class="pkg-head">
+          <div class="eyebrow">Cobertura Foto</div>
+          <h3>Fotografía</h3>
+          <div class="sub">Documental · Editorial</div>
+        </div>
+        <div class="pkg-body">
+          <ul>          <li><span class="feat-bullet"></span><span><b>2 Fotógrafos</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>8 horas de cobertura (Q1,000 hora extra)</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>500 fotografías finales</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>2 horas Save the date (diferente día)</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>Galería online con fotografías</b></span></li></ul>
+        </div>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-head">
+          <div class="eyebrow">Sin video</div>
+          <h3>—</h3>
+          <div class="sub">Solo foto</div>
+        </div>
+        <div class="pkg-body">
+          <ul>          <li><span class="feat-bullet"></span><span><b>Este paquete es solo fotografía</b></span></li>
+          <li><span class="feat-bullet"></span><span><b>Si querés video, pedinos cotización aparte</b></span></li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="timeline-section">
+    <div class="timeline-wrap">
+      <div style="text-align:center;">
+        <div class="sec-eyebrow">Calendario de pagos</div>
+        <h2 class="sec-title">Inversión planificada,<br>sin sorpresas.</h2>
+        <p class="sec-lede">Pago fraccionado en 2 cuotas distribuidas entre la aceptación y los días previos al evento. La primera cuota se ejecuta al confirmar la cotización.</p>
+      </div>
+      <div class="cuotas-control" data-cuotas-control data-precio="13,500" data-evento="11 · 12 · 2026">
+        <button class="cuotas-btn active" data-cuotas="2">2 pagos</button>
+        <button class="cuotas-btn" data-cuotas="3">3 pagos</button>
+        <button class="cuotas-btn" data-cuotas="4">4 pagos</button>
+      </div>
+      <div class="cuotas-summary" data-cuotas-summary>
+        <strong data-cuota-monto>Q6,750</strong> por pago · Total <strong>Q13,500</strong>
+      </div>
+      <div class="timeline-events" data-timeline>
+                <div class="t-event paid">
+          <div class="t-num">1</div>
+          <div class="t-date">29 · jun · 2026</div>
+          <div class="t-amount">Q6,750</div>
+          <div class="t-status">Confirmado</div>
+        </div>
+        <div class="t-event ">
+          <div class="t-num">2</div>
+          <div class="t-date">11 · dic · 2026</div>
+          <div class="t-amount">Q6,750</div>
+          <div class="t-status">Final</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="total-section">
+    <div class="total-card">
+      <div class="total-label">Inversión total · Gold</div>
+      <div class="total-amount"><span class="currency">Q</span>13,500</div>
+      <div class="total-foot">Trece Mil Quinientos Quetzales</div>
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <h2 class="cta-title">Confirmá y reservá<br>tu fecha</h2>
+    <p class="cta-desc">Tu fecha está disponible hasta que se ejecute la primera cuota. Si querés avanzar, agendamos una llamada para cuadrar los detalles finales.</p>
+    <a href="https://wa.me/50231648254?text=Hola%20Kevin%2C%20vengo%20de%20la%20cotizacion%20multiple%20de%20Max%20%26%20Yeilin%20%E2%80%94%20me%20interesa%20la%20Cotizacion%203%20(Gold)" class="cta-btn">
+      <svg viewBox="0 0 24 24" width="14" height="14"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" fill="currentColor"/></svg>
+      Hablar por WhatsApp — Cotización 3
+    </a>
+    <div class="cta-meta">Respuesta en menos de 24 h</div>
+  </div>
 </section>
 
-<!-- FOOTER -->
+<!-- FOOTER COMPARTIDO -->
 <footer class="footer">
-  <div class="footer-brand">Norkevin Photography</div>
-  <div class="footer-tag">Max &amp; Yeilin Â· 11 Â· 12 Â· 2026</div>
-
-  <div class="footer-grid">
-    <div>
-      <div class="footer-cell-label">Email</div>
-      <div class="footer-cell-value">
-        <a href="mailto:norkevinfoto@gmail.com">norkevinfoto@gmail.com</a>
-      </div>
-    </div>
-    <div>
-      <div class="footer-cell-label">WhatsApp</div>
-      <div class="footer-cell-value">
-        <a href="https://wa.me/50231648254" target="_blank" rel="noopener">+502 3164 8254</a>
-      </div>
-    </div>
-    <div>
-      <div class="footer-cell-label">Web</div>
-      <div class="footer-cell-value">
-        <a href="https://norkevinphoto.com" target="_blank" rel="noopener">norkevinphoto.com</a>
-      </div>
-    </div>
+  <div class="footer-brand">Norkevin <span>Photography</span></div>
+  <div class="footer-tag">Wedding Collections</div>
+  <div class="footer-contact">
+    <a href="mailto:norkevinfoto@gmail.com">norkevinfoto@gmail.com</a>
+    <a href="tel:+50231648254">+502 3164 8254</a>
+    <a href="https://norkevinphoto.com" target="_blank">norkevinphoto.com</a>
   </div>
-
-  <div class="footer-meta">CotizaciÃ³n NÂ° 20260629-portfolio Â· Pendiente ðŸŸ¡</div>
+  <div class="footer-bottom">
+    Cotización válida por 14 días desde su emisión · 11 · 12 · 2026
+  </div>
 </footer>
 
-<script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
-
-  document.querySelectorAll('.fade').forEach(el => observer.observe(el));
-</script>
-
-<button class="dl-btn" onclick="window.print()" aria-label="Descargar cotizaciÃ³n en PDF">
+<button class="dl-btn" onclick="window.print()" aria-label="Descargar cotización en PDF">
   <svg viewBox="0 0 24 24" width="14" height="14">
     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
     <polyline points="7 10 12 15 17 10"/>
@@ -1064,6 +1224,22 @@ main, section, footer { position: relative; z-index: 2; }
 </button>
 
 <script>
+  // Tab switching
+  function switchTab(num) {
+    document.querySelectorAll('.quote-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    const target = document.querySelector(`.quote-section[data-quote="${num}"]`);
+    const btn = document.querySelector(`.tab-btn[data-tab="${num}"]`);
+    if (target) target.classList.add('active');
+    if (btn) btn.classList.add('active');
+    // Smooth scroll to top of section
+    document.querySelector('.tabs-bar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+  });
+
+  // Fade-in on scroll
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1074,6 +1250,95 @@ main, section, footer { position: relative; z-index: 2; }
   }, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
 
   document.querySelectorAll('.fade').forEach(el => observer.observe(el));
+
+  // ===== CALCULADORA DE PAGOS INTERACTIVA =====
+  const MESES_CORTO = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
+  function formatQ(n) {
+    return 'Q' + Math.round(n).toLocaleString('en-US');
+  }
+
+  function fmtFecha(fecha) {
+    const dia = String(fecha.getDate()).padStart(2,'0');
+    const mes = MESES_CORTO[fecha.getMonth()];
+    const yr = fecha.getFullYear();
+    return `${dia} · ${mes} · ${yr}`;
+  }
+
+  function parseFechaCorto(str) {
+    // Formato esperado: "DD · MM · YYYY" o similar
+    if (!str) return new Date();
+    const parts = String(str).split('·').map(s => s.trim());
+    if (parts.length >= 3) {
+      const d = parseInt(parts[0], 10) || 1;
+      const m = parseInt(parts[1], 10) || 1;
+      const y = parseInt(parts[2], 10) || new Date().getFullYear();
+      return new Date(y, m - 1, d);
+    }
+    return new Date();
+  }
+
+  function calcularCuotas(precio, numCuotas, fechaEventoStr) {
+    const base = Math.floor(precio / numCuotas);
+    const resto = precio - base * numCuotas;
+    const eventos = [];
+    const today = new Date();
+    const dia0 = today;
+    const fechaEvento = parseFechaCorto(fechaEventoStr);
+    for (let i = 0; i < numCuotas; i++) {
+      const monto = i === numCuotas - 1 ? base + resto : base;
+      let fecha;
+      if (i === 0) {
+        fecha = dia0;
+      } else if (i === numCuotas - 1) {
+        fecha = fechaEvento;
+      } else {
+        // Pagos intermedios: espaciados proporcionalmente entre hoy y el evento
+        const fraccion = i / (numCuotas - 1);
+        const totalMs = fechaEvento.getTime() - dia0.getTime();
+        fecha = new Date(dia0.getTime() + fraccion * totalMs);
+      }
+      const status = i === 0 ? 'Confirmado' : (i === numCuotas - 1 ? 'Final' : 'Pendiente');
+      const cls = i === 0 ? 'paid' : '';
+      eventos.push({ idx: i + 1, fecha, monto, status, cls });
+    }
+    return eventos;
+  }
+
+  function renderTimeline(container, eventos) {
+    container.innerHTML = eventos.map(ev => `
+      <div class="t-event ${ev.cls}">
+        <div class="t-num">${ev.idx}</div>
+        <div class="t-date">${fmtFecha(ev.fecha)}</div>
+        <div class="t-amount">${formatQ(ev.monto)}</div>
+        <div class="t-status">${ev.status}</div>
+      </div>
+    `).join('');
+  }
+
+  // Activar calculadora en cada section
+  document.querySelectorAll('[data-cuotas-control]').forEach(control => {
+    const precio = parseInt(String(control.dataset.precio).replace(/[^0-9]/g, ''), 10);
+    const timeline = control.parentElement.querySelector('[data-timeline]');
+    const summary = control.parentElement.querySelector('[data-cuotas-summary]');
+    const montoEl = summary.querySelector('[data-cuota-monto]');
+    const buttons = control.querySelectorAll('.cuotas-btn');
+
+    function update(n) {
+      buttons.forEach(b => b.classList.toggle('active', parseInt(b.dataset.cuotas, 10) === n));
+      const eventos = calcularCuotas(precio, n, control.dataset.evento);
+      renderTimeline(timeline, eventos);
+      // Update summary
+      const cuota = eventos[0].monto;
+      montoEl.textContent = formatQ(cuota);
+      // Set grid columns
+      timeline.style.gridTemplateColumns = `repeat(${n}, 1fr)`;
+    }
+
+    buttons.forEach(b => {
+      b.addEventListener('click', () => update(parseInt(b.dataset.cuotas, 10)));
+    });
+  });
 </script>
 
 </body>
